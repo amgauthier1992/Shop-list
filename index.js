@@ -49,11 +49,11 @@ function handleNewItemSubmit() {
     //disables default behavior of form which is to refresh
     //the page.
 
-    let item = $('.js-shopping-list-entry').val()
+    const item = $('.js-shopping-list-entry').val()
     console.log(item);
     //grab new item from 'add an item' input
 
-    let store = {
+    const store = {
       id: cuid(),
       name: item,
       checked: false
@@ -75,19 +75,24 @@ function handleItemCheckClicked() {
   $('.js-shopping-list').on('click', `.js-item-toggle`, function(event) {
     console.log('`handleItemCheckClicked` ran');
     const id = $(event.currentTarget).closest('li').find('.js-shopping-item').toggleClass('shopping-item__checked')
-    // toggleCheckedForListItem(id);
   });
 }
 //dont need to render if you arent adding or deleting elements
 
 // this function will be responsible for when users want to delete a shopping list
-// item
+// item. selects the parent element (ul) of class .js-shopping-list. On click, we look
+// for an element with the class .js-item-delete (this is the <li> that is generated).
 function handleDeleteItemClicked() {
   $('.js-shopping-list').on('click', `.js-item-delete`, function(event) {
     console.log('`handleDeleteItemClicked` ran');
-    $(event.currentTarget).closest('li').remove();
-  //selects the parent element (ul) of class .js-shopping-list. On click, we look
-  //for an element with the class .js-item-delete (this is the <li> that is generated).
+    //stores cuid of the current list item
+    const id = $(event.currentTarget).closest('li').data('item-id')
+    //stores index of the current list item in the store array
+    const index= STORE.findIndex(id => STORE.id === id);
+    //removes the li that is closest to the delete button clicked 
+    this.closest('li').remove();
+    //remove the item from the store
+    STORE.splice(index,1);
   });
 }
 
