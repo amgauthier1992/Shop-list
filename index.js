@@ -88,7 +88,12 @@ function handleDeleteItemClicked() {
     //stores cuid of the current list item
     const id = $(event.currentTarget).closest('li').data('item-id')
     //stores index of the current list item in the store array
-    const index= STORE.findIndex(id => STORE.id === id);
+    const index= STORE.findIndex(function(item,index){
+      if(item.id === id){
+        return index;
+      }
+    });
+    console.log(index);
     //removes the li that is closest to the delete button clicked 
     this.closest('li').remove();
     //remove the item from the store
