@@ -88,9 +88,9 @@ function handleDeleteItemClicked() {
     //stores cuid of the current list item
     const id = $(event.currentTarget).closest('li').data('item-id')
     //stores index of the current list item in the store array
-    const index= STORE.findIndex(function(item,index){
+    const index= STORE.findIndex(function(item){
       if(item.id === id){
-        return index;
+        return item;
       }
     });
     console.log(index);
